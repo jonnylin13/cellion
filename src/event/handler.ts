@@ -2,10 +2,16 @@
 
 export class CHandler {
   eventName: string;
-  run: Function;
+  handler: Function;
+  context: any;
 
   constructor(eventName: string, context: any, handler: Function) {
     this.eventName = eventName;
-    this.run = handler.bind(context);
+    this.handler = handler;
+    this.context = context;
+  }
+
+  run(...args: any[]) {
+    this.handler(this.context, ...args);
   }
 }

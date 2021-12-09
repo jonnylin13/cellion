@@ -13,7 +13,6 @@ export class CPublisher extends EventEmitter implements CQueueUser {
 
   emit(eventName: string | symbol, ...args: any[]): boolean {
     super.emit('*', ...[eventName, ...args]);
-    super.emit(eventName, ...args);
     return true;
   }
 
