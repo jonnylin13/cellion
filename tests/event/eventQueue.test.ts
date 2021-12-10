@@ -1,18 +1,18 @@
-import { CPublisher, CHandler, CSubscriber, CEventQueue } from "../../src/event";
+import Event from "../../src/event";
 
 
-const publisher = new CPublisher('testPublisher');
+const publisher = new Event.CPublisher('testPublisher');
 const ctx = {someVar: 2};
-const handler = new CHandler('testEvent', ctx, (context: any, val: number) => {
+const handler = new Event.CHandler('testEvent', ctx, (context: any, val: number) => {
   context.someVar += val;
 });
-const subscriber = new CSubscriber('testSubscriber', [handler]);
-const handler2 = new CHandler('testEvent2', ctx, (context: any) => {
+const subscriber = new Event.CSubscriber('testSubscriber', [handler]);
+const handler2 = new Event.CHandler('testEvent2', ctx, (context: any) => {
   context.someVar = 0;
 });
-const subscriber2 = new CSubscriber('testSubscriber2', [handler2]);
+const subscriber2 = new Event.CSubscriber('testSubscriber2', [handler2]);
 
-const eventQueue = new CEventQueue();
+const eventQueue = new Event.CEventQueue();
 
 test('queue should add publisher and subscriber', () => {
   eventQueue.add(publisher);

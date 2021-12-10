@@ -1,7 +1,7 @@
-import { CHandler } from "../../src/event";
+import Event from "../../src/event";
 
 const ctx = {someVar: 2};
-const handler = new CHandler('testEvent', ctx, (context: any, val: number) => {
+const handler = new Event.CHandler('testEvent', ctx, (context: any, val: number) => {
   context.someVar += val;
 });
 

@@ -1,4 +1,5 @@
-import { CSubscriber, CPublisher } from ".";
+import { CPublisher } from "./publisher";
+import { CSubscriber } from "./subscriber";
 import EventException from "../exception/event";
 
 
