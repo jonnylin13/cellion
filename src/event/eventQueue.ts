@@ -1,4 +1,5 @@
 import { CSubscriber, CPublisher } from ".";
+import EventException from "../exception/event";
 
 
 export class CEventQueue {
@@ -13,7 +14,7 @@ export class CEventQueue {
       this.publishers.set(queueUser.id, queueUser);
 
       // Asynchronously publish events
-      queueUser.on('*', async (...args) => {
+      queueUser.on('*', async (...args: any[]) => {
         this.handleEvent(...args);
         return;
       });
@@ -21,12 +22,27 @@ export class CEventQueue {
     else this.subscribers.set(queueUser.id, queueUser);
   }
 
-  delete(queueUser: CPublisher | CSubscriber): void {
+  delete(value: CPublisher | CSubscriber | string): void {
+    if (typeof value === 'string') {
+      const queueUser = this.getPublisherOrSubscriberById(value);
+      if (queueUser === undefined) throw new EventException.NoQueueUserFound();
+      this.deleteQueueUser(queueUser);
+      return;
+    }
+    this.deleteQueueUser(value);
+  }
+
+  deleteQueueUser(queueUser: CPublisher | CSubscriber) {
     if (queueUser instanceof CPublisher) {
       queueUser.removeAllListeners('*');
       this.publishers.delete(queueUser.id);
     }
     else this.subscribers.delete(queueUser.id);
+  }
+
+  private getPublisherOrSubscriberById(id: string): CPublisher | CSubscriber | undefined {
+    if (this.publishers.has(id)) return this.publishers.get(id);
+    return this.subscribers.get(id);
   }
 
   private handleEvent(...args: any[]): void {
@@ -35,6 +51,14 @@ export class CEventQueue {
     for (const subscriber of this.subscribers.values()) {
       if (subscriber.hasEvent(eventName)) subscriber.handle(eventName, ...theRest);
     }
+  }
+
+  getPublishers() {
+    return Array.from(this.publishers.values());
+  }
+
+  getSubscribers() {
+    return Array.from(this.subscribers.values());
   }
   
 }

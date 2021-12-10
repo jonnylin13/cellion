@@ -1,6 +1,6 @@
 import { CPublisher } from "./publisher";
 import { CSubscriber } from "./subscriber";
-import { CEventQueue } from "./eventQ";
+import { CEventQueue } from "./eventQueue";
 import { CHandler } from "./handler";
 
 

@@ -1,7 +1,7 @@
 {
   "name": "cellion",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "2D sidescroller MMORPG based on MapleStory (game library)",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {

@@ -2,7 +2,7 @@ import { CQueueUser } from "./interface/qUser";
 import { CHandler } from "./handler";
 
 
-export abstract class CSubscriber implements CQueueUser {
+export class CSubscriber implements CQueueUser {
 
   id: string;
   private handlers: Map<string, CHandler> = new Map();
